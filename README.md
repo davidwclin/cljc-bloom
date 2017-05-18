@@ -5,11 +5,11 @@ A cross-platform [bloom filter](https://en.wikipedia.org/wiki/Bloom_filter) impl
 ## Installation
 
 Include the following dependency in project.clj file:
-
+```clojure
     :dependencies [[davidwclin/cljc-bloom "0.1.0"]]
-
+```
 ## Example Usage
-   
+```clojure
     (require '[bloom.core :as bf]) 
     (let [upper-cardinality 20
           target-false-positive-rate 0.05]
@@ -19,9 +19,10 @@ Include the following dependency in project.clj file:
       (bf/add! my-bf (str i)))
     (bf/has? my-bf "4")  ;; true
     (bf/has? my-bf "45") ;; false
-    
-(de)serialization into (or from) JSON    
+```
 
+(de)serialization into (or from) JSON    
+```clojure
     ;; serialize in clj
     (bf/serialize my-bf "/tmp/my-bf.json")
     
@@ -39,7 +40,7 @@ Include the following dependency in project.clj file:
         (-> serialized-string js/JSON.parse bf/->bf)))
     (bf/has? my-bf "4")  ;; true
     (bf/has? my-bf "45") ;; false
-
+```
 ## Implementation
 
 * Bloom filters require an arbitrary number of hashes, this is achieved by generating linear combinations
