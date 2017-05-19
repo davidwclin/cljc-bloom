@@ -47,7 +47,7 @@
    (defn xxhash32
      "returns 32-bit signed int"
      [s seed]
-     (-> (js/XXH seed) (.update s) .digest .toNumber))
+     (-> (js/XXH.h32 seed) (.update s) .digest .toNumber))
    )
 
 (defprotocol IBloomFilter
@@ -155,26 +155,3 @@
      (assert (not (empty? buckets-)))
      (BloomFilter. m k buckets- seed)))
   )
-
-(comment
-  (ThirtyTwoBit/bitShiftLeft 1 31)
-  (bit-shift-left 1 31)
-  (ThirtyTwoBit/polynomial 534233244 39 23)
-  (xxhash32 "asdf")
-  (mod -234 5)
-
-  (let [bf (->bf 1000 0.01)]
-    (add! bf "asdf")
-    (add! bf "foo")
-    (add! bf "bar")
-    (assert (has? bf "asdf"))
-    (serialize bf (str "tmp/" (System/currentTimeMillis) ".json"))
-    )
-
-
-
-
-
-
-  )
-

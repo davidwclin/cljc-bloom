@@ -62,20 +62,6 @@
             (atom nil))
    )
 
-;; load all-words & persisted-bf on client
-#?(:cljs
-   (do
-     (if (empty? @all-words)
-       (xhr/send "data/words.txt" (fn [e]
-                                    (reset! all-words (-> e .-target .getResponse str/split-lines))
-                                    (if-not @persisted-bf
-                                      (xhr/send "data/words-bf.json" (fn [e]
-                                                                       (reset! persisted-bf (-> e .-target .getResponseJson))
-                                                                       (run-tests)))
-                                      (run-tests))))
-       (run-tests)))
-   )
-
 (deftest test-simple
   (testing "positives"
     (let [bf (c/->bf 100 0.01)]
@@ -155,7 +141,20 @@
                500))
   )
 
-
+;; load all-words & persisted-bf on client
+;; at bottom so tests are already loaded
+#?(:cljs
+   (do
+     (if (empty? @all-words)
+       (xhr/send "data/words.txt" (fn [e]
+                                    (reset! all-words (-> e .-target .getResponse str/split-lines))
+                                    (if-not @persisted-bf
+                                      (xhr/send "data/words-bf.json" (fn [e]
+                                                                       (reset! persisted-bf (-> e .-target .getResponseJson))
+                                                                       (run-tests)))
+                                      (run-tests))))
+       (run-tests)))
+   )
 
 (comment
   (ns-unmap 'bloom.core-test 'persisted-bf)

@@ -6,7 +6,7 @@ A cross-platform [bloom filter](https://en.wikipedia.org/wiki/Bloom_filter) impl
 
 Include the following dependency in project.clj file:
 
-    :dependencies [[davidwclin/cljc-bloom "0.1.0"]]
+    :dependencies [[davidwclin/cljc-bloom "0.1.1"]]
 
 ## Example Usage
    
